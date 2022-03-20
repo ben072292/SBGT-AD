@@ -1,9 +1,10 @@
 #!/bin/bash
-#SBATCH --nodes=3
-#SBATCH --time=2-00:00:00
-#SBATCH --partition long
+#SBATCH --nodes=9
+#SBATCH --time=12:00:00
+#SBATCH --partition=compute
+#SBATCH --account=ohs115
 #SBATCH --job-name=myjob
-#SBATCH --ntasks-per-node=56
+#SBATCH --ntasks-per-node=128
 
 #export JAVA_HOME=/home/hqi6/jdk-17.0.2
 #export PATH=$JAVA_HOME:$PATH
@@ -16,11 +17,11 @@ NODE_LIST=`cat spark.list`
 MASTER=`head -1 spark.list`
 SLAVES=`sed '1d' spark.list`
 NODE_NUM=`cat spark.list | wc -l`
-CORES_PER_NODE=56
+CORES_PER_NODE=128
 PARALLELISM=$((CORES_PER_NODE*(NODE_NUM-1)))
 echo $PARALLELISM
 SPARK_HOME=/home/hqi6/spark-3.2.1-bin-hadoop3.2
-SPARK_TEMP_DIR=
+SPARK_TEMP_DIR=/dev/shm
 
 MY_HOST=`hostname -s`
 
@@ -41,10 +42,10 @@ echo $SPARK_CONF_DIR
 sed "s/master:7077/$MASTER:7077/g" $SPARK_CONF_DIR/my-spark-defaults.conf > $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.default.parallelism '"$PARALLELISM" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.temp.directory '"$SPARK_TEMP_DIR" $SPARK_CONF_DIR/spark-defaults.conf
-# echo $SLAVES > $SPARK_CONF_DIR/workers
+echo $SLAVES > $SPARK_CONF_DIR/workers
 
 sh $SPARK_HOME/sbin/start-master.sh
 sh $SPARK_HOME/sbin/start-workers.sh
 
 sh /home/hqi6/temp/run.sh $SPARK_HOME
-sleep 10000000
+#sleep 10000000

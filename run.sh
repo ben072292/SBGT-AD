@@ -10,7 +10,7 @@ SPARK_HOME=$1
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.benchmarks.LatticeBenchmark SC22-OP2.jar
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.benchmarks.LatticeBenchmark SC22-OP1.jar
 
-$SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.tests.HybridCrossPruningTreeTest SC22-Final.jar 28 LatticeDilution 0.02 0.01 0.01 1 24 0 12 1e-4
+$SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.tests.HybridCrossPruningTreeTest SC22-Final.jar 25 LatticeDilution 0.02 0.01 0.01 1 24 0 12 1e-4 2
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.tests.HybridCrossPruningTreeTest SC22-Final.jar 21 LatticeDilution 0.02 0.01 0.01 1 24 0 12 1e-5
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.tests.HybridCrossPruningTreeTest SC22-Final.jar 22 LatticeDilution 0.02 0.01 0.01 1 24 0 12 1e-5
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.tests.HybridCrossPruningTreeTest SC22-Final.jar 23 LatticeDilution 0.02 0.01 0.01 1 24 0 12 1e-5
