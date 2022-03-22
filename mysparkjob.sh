@@ -1,9 +1,10 @@
 #!/bin/bash
-#SBATCH --nodes=3
+#SBATCH --nodes=9
 #SBATCH --time=12:00:00
-#SBATCH --partition=long
+#SBATCH --partition=compute
 #SBATCH --job-name=myjob
-#SBATCH --ntasks-per-node=56
+#SBATCH --ntasks-per-node=128
+#SBATCH --account=ohs115
 
 scontrol show hostname > spark.list
 
@@ -13,10 +14,10 @@ NODE_LIST=`cat spark.list`
 MASTER=`head -1 spark.list`
 SLAVES=`sed '1d' spark.list`
 NODE_NUM=`cat spark.list | wc -l`
-CORES_PER_NODE=56
-CPUS_PER_TASK=8
-MASTER_MEMORY=240g
-WORKER_MEMORY=240g
+CORES_PER_NODE=128
+CPUS_PER_TASK=16
+MASTER_MEMORY=120g
+WORKER_MEMORY=120g
 WORKER_DIR=/dev/shm
 PARALLELISM=$((CORES_PER_NODE*(NODE_NUM-1)))
 echo $PARALLELISM
