@@ -5,9 +5,6 @@
 #SBATCH --job-name=myjob
 #SBATCH --ntasks-per-node=56
 
-#export JAVA_HOME=/home/hqi6/jdk-17.0.2
-#export PATH=$JAVA_HOME:$PATH
-
 scontrol show hostname > spark.list
 
 NODE_LIST=`cat spark.list`
@@ -17,6 +14,10 @@ MASTER=`head -1 spark.list`
 SLAVES=`sed '1d' spark.list`
 NODE_NUM=`cat spark.list | wc -l`
 CORES_PER_NODE=56
+CPUS_PER_TASK=8
+MASTER_MEMORY=240g
+WORKER_MEMORY=240g
+WORKER_DIR=/dev/shm
 PARALLELISM=$((CORES_PER_NODE*(NODE_NUM-1)))
 echo $PARALLELISM
 SPARK_HOME=/home/hqi6/spark-3.2.1-bin-hadoop3.2
@@ -39,10 +40,19 @@ echo $SPARK_CONF_DIR
 #echo $SLAVES > ${SPARK_CONF_DIR}/workers
 
 sed "s/master:7077/$MASTER:7077/g" $SPARK_CONF_DIR/my-spark-defaults.conf > $SPARK_CONF_DIR/spark-defaults.conf
-sed -i '$aspark.default.parallelism '"$PARALLELISM" $SPARK_CONF_DIR/spark-defaults.conf
+# sed -i '$aspark.default.parallelism '"$PARALLELISM" $SPARK_CONF_DIR/spark-defaults.conf
+sed -i '$aspark.driver.memory '"$MASTER_MEMORY" $SPARK_CONF_DIR/spark-defaults.conf
+sed -i '$aspark.executor.memory '"$WORKER_MEMORY" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.temp.directory '"$SPARK_TEMP_DIR" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.network.timeout 100000000' $SPARK_CONF_DIR/spark-defaults.conf
+sed -i '$aspark.task.cpus '"$CPUS_PER_TASK" $SPARK_CONF_DIR/spark-defaults.conf
 echo $SLAVES > $SPARK_CONF_DIR/workers
+
+cp $SPARK_CONF_DIR/spark-env.sh.template $SPARK_CONF_DIR/spark-env.sh
+sed -i '$aexport SPARK_WORKER_CORES='"$CORES_PER_NODE" $SPARK_CONF_DIR/spark-env.sh
+sed -i '$aexport SPARK_WORKER_MEMORY='"$WORKER_MEMORY" $SPARK_CONF_DIR/spark-env.sh
+sed -i '$aexport SPARK_WORKER_DIR='"$WORKER_DIR" $SPARK_CONF_DIR/spark-env.sh
+
 
 sh $SPARK_HOME/sbin/start-master.sh
 sh $SPARK_HOME/sbin/start-workers.sh
