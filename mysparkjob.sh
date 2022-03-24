@@ -46,7 +46,7 @@ sed -i '$aspark.driver.memory '"$MASTER_MEMORY" $SPARK_CONF_DIR/spark-defaults.c
 sed -i '$aspark.executor.memory '"$WORKER_MEMORY" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.temp.directory '"$SPARK_TEMP_DIR" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.network.timeout 100000000' $SPARK_CONF_DIR/spark-defaults.conf
-sed -i '$aspark.task.cpus '"$CPUS_PER_TASK" $SPARK_CONF_DIR/spark-defaults.conf
+# sed -i '$aspark.task.cpus '"$CPUS_PER_TASK" $SPARK_CONF_DIR/spark-defaults.conf
 echo $SLAVES > $SPARK_CONF_DIR/workers
 
 cp $SPARK_CONF_DIR/spark-env.sh.template $SPARK_CONF_DIR/spark-env.sh
@@ -58,5 +58,5 @@ sed -i '$aexport SPARK_WORKER_DIR='"$WORKER_DIR" $SPARK_CONF_DIR/spark-env.sh
 sh $SPARK_HOME/sbin/start-master.sh
 sh $SPARK_HOME/sbin/start-workers.sh
 
-sh /home/hqi6/temp/run.sh $SPARK_HOME
+sh /home/hqi6/temp/run.sh $SPARK_HOME $NODE_NUM
 #sleep 10000000
