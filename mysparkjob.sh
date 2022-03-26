@@ -1,10 +1,9 @@
 #!/bin/bash
 #SBATCH --nodes=9
-#SBATCH --time=12:00:00
-#SBATCH --partition=compute
+#SBATCH --time=24:00:00
+#SBATCH --partition=normal
 #SBATCH --job-name=myjob
-#SBATCH --ntasks-per-node=128
-#SBATCH --account=ohs115
+#SBATCH --ntasks-per-node=68
 
 scontrol show hostname > spark.list
 
@@ -14,7 +13,7 @@ NODE_LIST=`cat spark.list`
 MASTER=`head -1 spark.list`
 SLAVES=`sed '1d' spark.list`
 NODE_NUM=`cat spark.list | wc -l`
-CORES_PER_NODE=128
+CORES_PER_NODE=64
 CPUS_PER_TASK=16
 MASTER_MEMORY=120g
 WORKER_MEMORY=120g
@@ -46,7 +45,7 @@ sed -i '$aspark.driver.memory '"$MASTER_MEMORY" $SPARK_CONF_DIR/spark-defaults.c
 sed -i '$aspark.executor.memory '"$WORKER_MEMORY" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.temp.directory '"$SPARK_TEMP_DIR" $SPARK_CONF_DIR/spark-defaults.conf
 sed -i '$aspark.network.timeout 100000000' $SPARK_CONF_DIR/spark-defaults.conf
-# sed -i '$aspark.task.cpus '"$CPUS_PER_TASK" $SPARK_CONF_DIR/spark-defaults.conf
+sed -i '$aspark.task.cpus '"$CPUS_PER_TASK" $SPARK_CONF_DIR/spark-defaults.conf
 echo $SLAVES > $SPARK_CONF_DIR/workers
 
 cp $SPARK_CONF_DIR/spark-env.sh.template $SPARK_CONF_DIR/spark-env.sh
