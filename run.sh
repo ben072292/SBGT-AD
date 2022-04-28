@@ -4,11 +4,11 @@ SPARK_HOME=$1
 CPUS_PER_TASK=$2
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 4
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 8
-$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 16
-$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 32
-$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 64
-$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 128
-$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.BatchSimulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 256
+$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.Simulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 16
+$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.Simulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 32
+$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.Simulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 64
+$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.Simulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 128
+$SPARK_HOME/bin/spark-submit --class edu.cwru.csds.sprt.experiments.Simulation SPRT_Java-0.0.1-SNAPSHOT.jar 25 256
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.benchmarks.LatticeBenchmark SC22-OP7.jar
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.benchmarks.LatticeBenchmark SC22-OP6.jar
 # $SPARK_HOME/bin/spark-submit --class edu.cwru.bayesgrouptesting.benchmarks.LatticeBenchmark SC22-OP6.jar
